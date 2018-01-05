@@ -2,7 +2,10 @@ from YOLOtiny import *
 from predictor import *
 from lib.preprocess import *
 import cv2
+import chainer
 
+
+chainer.config.train = False
 model = YOLOtiny()
 serializers.load_npz("YOLOtiny_v2.model", model)
 
