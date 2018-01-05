@@ -23,7 +23,7 @@ def darknetConv2D(in_channel, out_channel, bn=True):
 # Convolution -> ReLU -> Pooling
 def CRP(c, h, stride=2, pooling=True):
     # convolution -> leakyReLU -> MaxPooling
-    h = c.b(c.n(c.c(h), test=True))
+    h = c.b(c.n(c.c(h)))
     h = F.leaky_relu(h,slope=0.1)
     if pooling:
         h = F.max_pooling_2d(h, ksize=2, stride=stride, pad=0)
@@ -111,6 +111,7 @@ class YOLOtiny(Chain):
         print(offset)
 
 if __name__ == '__main__':
+    chainer.config.train = False
     c=YOLOtiny()
     im=np.zeros((1, 3, 416, 416),dtype=np.float32) # ネットワークの入出力設定がNoneでも初回forward時にshape決まるので、とりあえず意味なく1回forwardする
     c.predict(im)
